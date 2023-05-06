@@ -21,22 +21,11 @@ def read_barcodes():
     if request.method == 'POST':
         data = request.get_json()
         if 'base64' in data:
-            path = './uploaded/'
-            if os.path.exists(path)==False:
-                os.makedirs(path)
             bytes_decoded = base64.b64decode(data['base64'])
-            img = Image.open(BytesIO(bytes_decoded))
-            # to jpg
-            out_jpg = img.convert('RGB')
-            filename = str(int(time.time()*1000))+'.jpg'
-            # save file
-            file_path = os.path.join(path,filename)
-            out_jpg.save(file_path)
             start_time = time.time()
-            response=reader.decode_file(file_path)
+            response=reader.decode_bytes(bytes_decoded)
             end_time = time.time()
             elapsed_time = int((end_time - start_time) * 1000)
-            os.remove(file_path)
             response["elapsedTime"] = elapsed_time
             return json.dumps(response)
     else:

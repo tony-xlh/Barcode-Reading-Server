@@ -17,6 +17,14 @@ class DynamsoftBarcodeReader():
         result_dict["results"] = results
         return result_dict
         
+    def decode_bytes(self, img_bytes):
+        result_dict = {}
+        results = []
+        text_results = self.dbr.decode_file_stream(img_bytes)
+        self.wrap_results(results,text_results)
+        result_dict["results"] = results
+        return result_dict
+        
     def wrap_results(self,results,text_results):
         if text_results==None:
             return
