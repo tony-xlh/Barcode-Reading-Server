@@ -1,12 +1,20 @@
 from dbr import *
 import os
 import base64
+import platform
+import logging
 
 class DynamsoftBarcodeReader():
     def __init__(self,use_intermediate_detection_results=False):
+        if platform.system() == 'Linux':
+            # Sets a directory path for saving the license cache.
+            folder_path = "/tmp/Dynamsoft"
+            # Create the folder if it doesn't exist
+            if not os.path.exists(folder_path):
+                os.makedirs(folder_path)
         error = BarcodeReader.init_license("DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==")
         if error[0] != EnumErrorCode.DBR_OK:
-            print("License error: "+ error[1])
+            logging.warning("License error: "+ error[1])
         self.dbr = BarcodeReader()
         
     def decode_file(self, img_path):
