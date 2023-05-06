@@ -29,11 +29,13 @@ def read_barcodes():
             out_jpg = img.convert('RGB')
             filename = str(int(time.time()*1000))+'.jpg'
             # save file
-            out_jpg.save(os.path.join(path,filename))
+            file_path = os.path.join(path,filename)
+            out_jpg.save(file_path)
             start_time = time.time()
-            response=reader.decode_file(os.path.join(path,filename))
+            response=reader.decode_file(file_path)
             end_time = time.time()
             elapsed_time = int((end_time - start_time) * 1000)
+            os.remove(file_path)
             response["elapsedTime"] = elapsed_time
             return json.dumps(response)
     else:
