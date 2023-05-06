@@ -14,7 +14,8 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 reader = aggregated_reader.AggregatedReader()
 
-@app.route('/read-barcodes', methods=['POST'])
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/readBarcodes', methods=['GET', 'POST'])
 @cross_origin()
 def read_barcodes():
     if request.method == 'POST':
