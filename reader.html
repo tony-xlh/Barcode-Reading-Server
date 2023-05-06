@@ -59,24 +59,24 @@
 
     function decode(){
       document.getElementById("status").innerText = "decoding...";
-      var url = "read-barcodes"
-      var xhr = new XMLHttpRequest();
-      var pay_load = {};
-      var dataURL = img.src;
-      var base64 = dataURL.substring(dataURL.indexOf(","),dataURL.length);
+      let url = "read-barcodes"
+      let xhr = new XMLHttpRequest();
+      let pay_load = {};
+      let dataURL = img.src;
+      let base64 = dataURL.substring(dataURL.indexOf(","),dataURL.length);
       pay_load["base64"] = base64;
       
       xhr.open('POST', url);
       xhr.setRequestHeader('content-type', 'application/json'); 
 
       xhr.onreadystatechange = function(){
-          if(xhr.readyState === 4){
-              console.log(xhr.status);
-              console.log(xhr.responseText);
-              if (xhr.status === 200){
-                  document.getElementById("status").innerText = "";
-              }
+        if(xhr.readyState === 4){
+          if (xhr.status === 200) {
+            let detectionResult = JSON.parse(xhr.responseText);
+            overlayResults(detectionResult.results);
+            document.getElementById("status").innerText = "";
           }
+        }
       }
       xhr.send(JSON.stringify(pay_load));
 
@@ -91,7 +91,7 @@
         const result = results[i];
         let a = document.createElementNS("http://www.w3.org/2000/svg","a");
         let polygon = document.createElementNS("http://www.w3.org/2000/svg","polygon");
-        polygon.setAttribute("points",getPointsAttributeFromArray(result.points));
+        polygon.setAttribute("points",getPointsAttribute(result));
         polygon.setAttribute("class","barcode-polygon");
         let title = document.createElementNS("http://www.w3.org/2000/svg","title");
         title.textContent = result.barcodeFormat + ": " + result.barcodeText;
@@ -101,12 +101,12 @@
       }
     }
 
-    function getPointsAttributeFromArray(points) {
-      let value = "";
-      points.forEach(point => {
-        value = value + point.x + " " + point.y + " ";
-      });
-      return value.trim();
+    function getPointsAttribute(result) {
+      let pointsData = result.x1 + "," + result.y1 + " ";
+      pointsData = pointsData + result.x2+ "," + result.y2 + " ";
+      pointsData = pointsData + result.x3+ "," + result.y3 + " ";
+      pointsData = pointsData + result.x4+ "," + result.y4;
+      return pointsData;
     }
 
     function clearElements(parent,tagName){
