@@ -45,7 +45,7 @@ A Python Flask server app which provides an API interface to read barcodes. The 
       "x3":0,
       "x4":0,
       "y1":0,
-      "y":0,
+      "y2":0,
       "y3":0,
       "y4":0
     }
