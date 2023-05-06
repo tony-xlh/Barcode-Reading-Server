@@ -4,7 +4,11 @@ import base64
 import os
 import time
 import json
-import aggregated_reader
+import sys
+script_folder_path = os.path.dirname((os.path.realpath(__file__)))
+sys.path.append(script_folder_path)
+from barcode_reader import aggregated_reader
+
 app = Flask(__name__, static_url_path='/', static_folder='./')
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'

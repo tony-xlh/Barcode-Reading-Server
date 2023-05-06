@@ -28,6 +28,8 @@
 
 <body>
   <div>
+    <label>URL:</label>
+    <input type="text" id="url" value="http://127.0.0.1:8888"/>
     <div>
       Load local image:
       <input type="file" id="barcodeFile" onchange="loadImageFromFile();" accept=".jpg,.jpeg,.png,.bmp" />
@@ -59,7 +61,8 @@
 
     function decode(){
       document.getElementById("status").innerText = "decoding...";
-      let url = "http://127.0.0.1:8888"
+      let url = document.getElementById("url").value;
+      console.log(url);
       let xhr = new XMLHttpRequest();
       let pay_load = {};
       let dataURL = img.src;
