@@ -52,3 +52,9 @@ A Python Flask server app which provides an API interface to read barcodes. The 
   ]
 }
 ```
+
+## Deploy to Vercel
+
+1. Install Vercel: `npm i -g vercel`
+2. Test for development: `vc dev`
+3. Deploy for production: `vc`
