@@ -1,8 +1,5 @@
 from flask import Flask, request, send_file
 from flask_cors import CORS, cross_origin
-from PIL import Image
-import base64
-from io import BytesIO
 import base64
 import os
 import time
